@@ -1,10 +1,14 @@
-from flask import Flask, request, jsonify
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+import uvicorn
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/api/ping', methods=['GET'])
-def send():
-    return jsonify({"status": "ok"}), 200
+
+@app.get("/api/ping", summary='Главная ручка')
+async def ping():
+    return JSONResponse(content={"status": "ok"}, status_code=200)
+
 
 if __name__ == "__main__":
-    app.run()
+    uvicorn.run(app, host="0.0.0.0", port=8000)
